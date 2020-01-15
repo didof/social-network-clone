@@ -16,21 +16,14 @@ $msgOld = $msgNew = $msgNew2 = "";
 //     }
 // }
 ?>
+<h3>Change Password:</h3>
 
-<?php if (empty($_SESSION["userId"])) {
-    header("Location: index.php");
-    exit();
-} else {
-?>
-    <h3>Change Password:</h3>
-
-    <form action="includes/changePwd.inc.php" method="post">
-        <input type="password" name="oldPwd" placeholder="Old Password"><span class="error"> <?php echo $msgOld ?></span> <br>
-        <input type="password" name="newPwd" placeholder="New Password"><span class="error"> <?php echo $msgNew ?></span><br>
-        <input type="password" name="newPwd2" placeholder="Confirm New Password"><span class="error"> <?php echo $msgNew2 ?></span><br>
-        <button type="submit" name="change-submit">Change it.</button>
-    </form>
-<?php } ?>
+<form action="includes/changePwd.inc.php" method="post">
+    <input type="password" name="oldPwd" placeholder="Old Password"><span class="error"> <?php echo $msgOld ?></span> <br>
+    <input type="password" name="newPwd" placeholder="New Password"><span class="error"> <?php echo $msgNew ?></span><br>
+    <input type="password" name="newPwd2" placeholder="Confirm New Password"><span class="error"> <?php echo $msgNew2 ?></span><br>
+    <button type="submit" name="change-submit">Change it.</button>
+</form>
 
 <?php
 require "footer.php";

@@ -133,6 +133,36 @@ if (!isset($_POST['signup-submit'])) {
                             var_dump($stmt);
                             echo '<br><br>';
                             echo '<h3>Success</h3>';
+
+                            # In order to create an associated row for the signup event, I need
+                            // to know the auto_implementated id of this user
+                            $sql = "SELECT * FROM users WHERE uidUsers=?";
+                            $stmt = mysqli_stmt_init($conn);
+                            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                echo '>Error: I couldn\'t download the info about the newborn user.';
+                            } else {
+                                mysqli_stmt_bind_param($stmt, "s", $username);
+                                mysqli_stmt_execute($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
+                                $info = mysqli_fetch_assoc($result);
+                                $associatedId = $info["idUsers"];
+                                # Now I know what Id it is inside the table users
+
+                                # When sign in, create a new associated row inside table profileimg
+                                $sql = "INSERT INTO profileimg (userId, name, status)
+                                VALUES (?, ?, ?)";
+                                $default = 'default_profile_img.png';
+                                $false = 0;
+
+                                $stmt = mysqli_stmt_init($conn);
+                                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                    echo '>Error: during the preparatiion of the statement';
+                                } else {
+                                    mysqli_stmt_bind_param($stmt, "isb", $associatedId, $default, $false);
+                                    mysqli_stmt_execute($stmt);
+                                    echo '>Success: new row inside table "profileimg"';
+                                }
+                            }
                             header("Location: ../index.php?signup=success");
                             exit();
                         }

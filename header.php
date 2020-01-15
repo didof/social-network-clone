@@ -22,7 +22,7 @@ session_start();
                 </form>
             </li>
             <li><a href="index.php"><button>Home</button></a></li>
-            <li><b><?php echo $_SESSION["userName"]; ?></b>, <i><?php echo $_SESSION["userMail"]; ?></i></li>
+            <li>Id: <b><?php echo $_SESSION["userId"]; ?></b>, username: <b><?php echo $_SESSION["userName"]; ?></b>, <i><?php echo $_SESSION["userMail"]; ?></i></li>
         </ul>
     <?php } else if (!isset($_SESSION["userId"])) { ?>
         <form action="includes/login.inc.php" method="post">

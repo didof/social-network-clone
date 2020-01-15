@@ -3,6 +3,10 @@ if (!empty($_POST["pic-submit"])) {
     header("Location: ../index.php?upload=goAway");
     exit();
 } else {
+    session_start();
+    $userId = $_SESSION["userId"];
+    echo '$userId => ' . $userId;
+    echo '<br><br>';
 
     # Declare
     $maxSize = 10000000; // 10Mb
@@ -43,8 +47,8 @@ if (!empty($_POST["pic-submit"])) {
         exit();
     } else if ($fileSize > $maxSize) { // 1Mb = 1000kb
         echo '>Error: The file is too big.';
-        header("Location: ../changePic.php?upload=fileSize&maxSize=$maxSize");
-        exit();
+        // header("Location: ../changePic.php?upload=fileSize&maxSize=$maxSize");
+        // exit();
     } else {
         # The file is suitable, we can proceed
 
@@ -64,8 +68,8 @@ if (!empty($_POST["pic-submit"])) {
         $allowedExtentionsString = implode(", .", $allowedExtentions);
         if (!in_array($fileExtention, $allowedExtentions)) {
             echo '>Error: This extention (' . $fileExtention . ') is not supported.';
-            header("Location: ../changePic.php?upload=extNotAllowed&ext=$fileExtention&allowed=$allowedExtentionsString");
-            exit();
+            // header("Location: ../changePic.php?upload=extNotAllowed&ext=$fileExtention&allowed=$allowedExtentionsString");
+            // exit();
         } else {
             # Show functionality of uniqid()
             $testUniqd = uniqid();
@@ -77,14 +81,31 @@ if (!empty($_POST["pic-submit"])) {
             # Create a new name for the uploaded file
             // Because if I submit two different files with same name.ext,
             // the latter overwrites the former
-            $fileNewName = uniqid('', true) . '.' . $fileExtention;
+            session_start();
+            $fileNewName = "profile_image_user_" .  $userId . '.' . $fileExtention;
             echo '$fileNewName => ' . $fileNewName . '<br><br>';
+
+            # Update in the db
+            include_once "dbh.inc.php";
+            $newStatus = 1;
+            $sql = "UPDATE `profileimg` SET `name`= ?, `status`= ? WHERE userId = ?";
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                echo '>Error: error during sql update';
+            } else {
+                mysqli_stmt_bind_param($stmt, "sii", $fileNewName, $newStatus, $userId);
+                if (mysqli_stmt_execute($stmt)) {
+                    echo '>Success: The image was uploaded in the database as' . $fileNewName . '<br>';
+                } else {
+                    echo '>Error: Opsie';
+                }
+            }
 
             # Addressing to folder
             $fileDestination = '../uploads/' . $fileNewName;
             move_uploaded_file($fileTmp_name, $fileDestination);
             echo '>Success: The file was uploaded successfully.';
-            header("Location: ../changePic.php?upload=success&fileName=$fileName");
+            header("Location: ../changePic.php?upload=success&fileName=$fileNewName");
             exit();
         }
     }

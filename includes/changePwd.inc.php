@@ -1,6 +1,6 @@
 <?php
 
-if (empty($_POST["change-submit"])) {
+if (!empty($_POST["change-submit"])) {
     header("Location: ../index.php");
     exit();
 } else {

@@ -1,5 +1,6 @@
 <?php
 require "header.php";
+include_once "includes/dbh.inc.php";
 ?>
 <main>
     <?php
@@ -13,39 +14,53 @@ require "header.php";
                 <input type="search" placeholder="Not active yet.">
             </div>
             <div class="profilePic">
-                <img src="uploads/default_profile_img.jpg" height="100px" width="100px">
                 <?php
-# ci serve una tabella per le immagini così composta:
-// id userId name_pic status
-// in questo div serve un if($status == 0) allora mostra default altrimenti seleziona dal database
-// il nome della foto e caricala
-
+                $sql = "SELECT * FROM profileimg WHERE userId=?";
+                $stmt = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                    echo '<img src="uploads/error_profile_img.png" height="100px" width="100px">';
+                } else {
+                    mysqli_stmt_bind_param($stmt, "i", $_SESSION["userId"]);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+                    $row = mysqli_fetch_assoc($result);
+                    if (!($row > 0)) {
+                        # there is not the row associated with this user
+                        echo '<img src="uploads/error_profile_img.png" height="100px" width="100px">';
+                    } else {
+                        # there istus the row associated with this user
+                        if ($row["status"] == 0) {
+                            # thus, the user didn't uploaded yet
+                            echo '<img src="uploads/default_profile_img.jpg" height="100px" width="100px">';
+                        } else {
+                            # this, the user already uploaded the pic
+                            echo "<img src='uploads/" . $row["name"] . "' height='100px' width='100px'>";
+                            echo "<br>trakPath => 'uploads/" . $row["name"] . "'";
+                        }
+                    }
+                }
 
                 ?>
-
-
-
-
-
-
-
+                <!-- <img src="uploads/default_profile_img.jpg" height="100px" width="100px"> -->
 
             </div>
             <div class="infoUser">
-                info of the user.
+                <h3>Prostagma executed:</h3>
+                <?php require "displayError.php"; ?>
+
             </div>
             <div class="canDo">
                 <h3>Things you can do:</h3>
                 <ul>
                     <li><a href="changePwd.php">Change password</a></li>
+                    <li><a href="changePic.php">Change profile picture</a></li>
                 </ul>
             </div>
             <div class="workingOn">
                 <h3>Working on:</h3>
                 <ul>
                     <li><a href="changeMail.php">Change e-mail</a></li>
-                    <li><a href="changePic.php">Change profile picture</a></li>
-                    <li><a href="changeColor.php">Change website color</a></li>
+                    <li><a href="changeUsername.php">Change username</a></li>
                 </ul>
             </div>
             <div class="wantTo">
@@ -53,8 +68,16 @@ require "header.php";
                 <ul>
                     <li>Create a search bar</li>
                     <li>Create a visualizer like Amazon with shopping list</li>
-                    <li>Create a visualizer like Amazon with shopping list</li>
+                    <li>Allow the user to choose witch features want to see</li>
                     <li>Create a repository for different extentions</li>
+                    <li>Different behaviour the first time you login:
+                        <ul>
+                            <li>Ask age -> low/bigger text size</li>
+                            <li>color-blind -> appropriate colors</li>
+                            <li>choose website theme</li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
             <div class="photos">
@@ -66,11 +89,9 @@ require "header.php";
     ?>
         <!-- Not logged in -->
         Welcome to my social network.
-        echo '<a href="signup.php">Signup</a>';
+        <a href="signup.php">Signup</a>
     <?php
     }
-
-    require "displayError.php";
     ?>
 </main>
 
