@@ -9,6 +9,9 @@ a {
 body {
   background-color: #bfd8d2;
 }
+li {
+  list-style: none;
+}
 
 .grid {
   display: grid;
@@ -20,6 +23,7 @@ body {
     "workingOn photos photos photos empty"
     "wantTo photos photos photos empty"; */
   background-color: #fedca2;
+  padding: 10px;
 }
 
 .empty {

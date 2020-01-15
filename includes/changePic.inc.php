@@ -85,6 +85,7 @@ if (!empty($_POST["pic-submit"])) {
             $fileNewName = "profile_image_user_" .  $userId . '.' . $fileExtention;
             echo '$fileNewName => ' . $fileNewName . '<br><br>';
 
+
             # Update in the db
             include_once "dbh.inc.php";
             $newStatus = 1;

@@ -34,8 +34,10 @@ include_once "includes/dbh.inc.php";
                             echo '<img src="uploads/default_profile_img.jpg" height="100px" width="100px">';
                         } else {
                             # this, the user already uploaded the pic
-                            echo "<img src='uploads/" . $row["name"] . "' height='100px' width='100px'>";
-                            echo "<br>trakPath => 'uploads/" . $row["name"] . "'";
+                            echo "<img src='uploads/" . $row["name"] . "?" . mt_rand() . "' height='150px' width='200px'>";
+                            // some browser can remember the picture and this force the user to refresh the page
+                            # FIX -> add mt_rand()
+                            // <img src='uploads/profile_image_user_1.jpg?218728917'>
                         }
                     }
                 }
@@ -46,19 +48,21 @@ include_once "includes/dbh.inc.php";
             </div>
             <div class="infoUser">
                 <h3>Prostagma executed:</h3>
-                <?php require "displayError.php"; ?>
+                <?php require "displayError.php" ?>
 
             </div>
             <div class="canDo">
                 <h3>Things you can do:</h3>
                 <ul>
                     <li><a href="changePwd.php">Change password</a></li>
-                    <li><a href="changePic.php">Change profile picture</a></li>
+                    <li><a href="changePic.php">Set/unset profile picture</a></li>
                 </ul>
             </div>
             <div class="workingOn">
                 <h3>Working on:</h3>
                 <ul>
+                    <li><a href="deleteUser.php">Delete account</a></li>
+                    <li><a href="uploadPic.php">Upload picture</a></li>
                     <li><a href="changeMail.php">Change e-mail</a></li>
                     <li><a href="changeUsername.php">Change username</a></li>
                 </ul>
@@ -81,7 +85,7 @@ include_once "includes/dbh.inc.php";
                 </ul>
             </div>
             <div class="photos">
-                show photos.
+                Show photos.
             </div>
         </div>
     <?php

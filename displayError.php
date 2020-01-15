@@ -15,6 +15,9 @@
                 case "login":
                     echo 'You are logged in as ' . $_SESSION["userName"] . ', by your e-mail ' . $_SESSION["userMail"];
                     break;
+                case "delete":
+                    echo 'Your profile image was deleted successfully.';
+                    break;
             }
         }
     } else if (!isset($_SESSION["userId"])) { # ciò che vedi durante logout
@@ -44,6 +47,9 @@
                     exit();
                 case "goAway":
                     echo 'You tried to reach a page from the URL.';
+                    exit();
+                case "deleteDefault":
+                    echo 'You are not allowed to delete the default profile image.';
                     exit();
             }
         }

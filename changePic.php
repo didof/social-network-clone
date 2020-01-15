@@ -36,10 +36,16 @@ include_once "includes/dbh.inc.php";
     ?>
     <p>Click below to select a picture from your pc.</p>
 
+    <!-- Upload/change picture -->
     <form action="includes/changePic.inc.php" method="post" enctype="multipart/form-data">
         <!-- enctype specifica come il data del form dovrebbe essere codificato -->
         <input type="file" name="file"><br>
         <button type="submit" name="pic-submit">Upload picture</button>
+    </form>
+
+    <!-- Delete picture -->
+    <form action="includes/deletePic.inc.php" method="post">
+        <button type="submit" name="pic-delete">Delete picture</button>
     </form>
 
     <?php
