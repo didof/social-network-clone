@@ -1,0 +1,54 @@
+body {
+  background-color: #eed2e7;
+  font-size: 16px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande";
+}
+
+input {
+  margin: 16px;
+  padding: 8px;
+  background-color: #eee;
+  border: none;
+  border-radius: 50px;
+  background-color: #adadad;
+  color: white;
+}
+
+button {
+  background-color: #501b1d;
+  border: none;
+  border-radius: 50px;
+  margin: 20px;
+  padding: 16px;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.error {
+  color: rgb(255, 160, 160);
+  text-shadow: #501b1d;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.success {
+  color: rgb(41, 28, 155);
+  text-shadow: #0b033a;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.nav-container {
+  display: flex;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+ul {
+  list-style: none;
+  margin: 0 30px;
+  padding: 10px 5px;
+}
