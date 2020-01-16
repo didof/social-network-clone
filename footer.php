@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    <h3>Prostagma executed:</h3>
+    <?php require "displayError.php" ?>
 
 </body>
 

@@ -10,8 +10,12 @@ include_once "includes/dbh.inc.php";
     ?>
         <div class="grid">
             <div class="empty">empty</div>
+            <div class="empty2">empty2</div>
             <div class="searchBar">
-                <input type="search" placeholder="Not active yet.">
+                <form action="index.php" method="post">
+                    <input type="text" name="searchInput" placeholder="Look for an username/e-mail">
+                    <button type="submit" name="search-submit">Search</button>
+                </form>
             </div>
             <div class="profilePic">
                 <?php
@@ -46,9 +50,8 @@ include_once "includes/dbh.inc.php";
                 <!-- <img src="uploads/default_profile_img.jpg" height="100px" width="100px"> -->
 
             </div>
-            <div class="infoUser">
-                <h3>Prostagma executed:</h3>
-                <?php require "displayError.php" ?>
+            <div class="resultUsers">
+                <?php include "includes/resultUsers.inc.php" ?>
 
             </div>
             <div class="canDo">
@@ -56,12 +59,12 @@ include_once "includes/dbh.inc.php";
                 <ul>
                     <li><a href="changePwd.php">Change password</a></li>
                     <li><a href="changePic.php">Set/unset profile picture</a></li>
+                    <li><a href="deleteUser.php">Delete account</a></li>
                 </ul>
             </div>
             <div class="workingOn">
                 <h3>Working on:</h3>
                 <ul>
-                    <li><a href="deleteUser.php">Delete account</a></li>
                     <li><a href="uploadPic.php">Upload picture</a></li>
                     <li><a href="changeMail.php">Change e-mail</a></li>
                     <li><a href="changeUsername.php">Change username</a></li>
@@ -70,10 +73,11 @@ include_once "includes/dbh.inc.php";
             <div class="wantTo">
                 <h3>I want to:</h3>
                 <ul>
-                    <li>Create a search bar</li>
+                    <li>Create a visit page of somebody else and leave a post</li>
                     <li>Create a visualizer like Amazon with shopping list</li>
                     <li>Allow the user to choose witch features want to see</li>
                     <li>Create a repository for different extentions</li>
+                    <li>When sign up you get your own uploads repository</li>
                     <li>Different behaviour the first time you login:
                         <ul>
                             <li>Ask age -> low/bigger text size</li>

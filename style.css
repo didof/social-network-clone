@@ -1,0 +1,126 @@
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: #e6e6e6;
+  width: 100%;
+  margin: 3px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  width: 70%;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+}
+
+button {
+  background-color: #a583c9;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  /* grid-template-rows: 30px 1fr 1fr 1fr; */
+  grid-template-areas:
+    "empty searchbar  empty2"
+    "canDo profilePic resultUser"
+    "workingOn photos resultUser"
+    "wantTo photos resultUser";
+  background-color: #e2d3d3;
+  padding: 10px;
+}
+
+.empty {
+  grid-area: empty;
+  /* grid-column: 1 / 2;
+  grid-row: 1 / 2; */
+}
+.empty2 {
+  grid-area: empty2;
+}
+
+.searchBar {
+  grid-area: searchbar;
+  /* grid-column: 2 / 4;
+  grid-row: 1 / 2; */
+}
+
+.profilePic {
+  /* grid-column: 2 / 3;
+  grid-row: 2 / 3; */
+  /* grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 7; */
+  grid-area: profilePic;
+}
+
+.resultUsers {
+  grid-area: resultUser;
+  /* grid-column: 4 / 6;
+  grid-row: 1 / auto; */
+  justify-content: start;
+  align-items: flex-start;
+}
+
+.resultUsers div:nth-child(odd) {
+  background-color: #bbbbbb;
+}
+
+.canDo {
+  grid-area: canDo;
+  /* grid-column: 1 / 2;
+  grid-row: 2 / 3; */
+  background-color: #fedcd2;
+}
+.canDo li:nth-child(odd) {
+  background-color: #fedce6;
+}
+
+.workingOn {
+  grid-area: workingOn;
+  /* grid-column: 1 / 2;
+  grid-row: 3 / 5; */
+  background-color: #fedcd2;
+}
+.workingOn li:nth-child(odd) {
+  background-color: #fedce6;
+}
+
+.wantTo {
+  grid-area: wantTo;
+  /* grid-column: 1 / 2;
+  grid-row: 5 / 6; */
+  background-color: #fedcd2;
+}
+.wantTo li:nth-child(odd) {
+  background-color: #fedce6;
+}
+
+.photos {
+  grid-area: photos;
+  /* grid-column: 2 / 3;
+  grid-row: 5 / 6; */
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
