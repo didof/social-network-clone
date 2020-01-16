@@ -75,6 +75,8 @@ if (!isset($_POST["login-submit"])) {
                     $_SESSION["userId"] = $row["idUsers"];
                     $_SESSION["userName"] = $row["uidUsers"];
                     $_SESSION["userMail"] = $row["emailUsers"];
+                    $_SESSION["attemptsDelete"] = 3;
+
 
                     header("Location: ../index.php?login=success");
                     exit();

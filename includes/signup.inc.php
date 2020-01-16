@@ -151,7 +151,7 @@ if (!isset($_POST['signup-submit'])) {
                                 # When sign in, create a new associated row inside table profileimg
                                 $sql = "INSERT INTO profileimg (userId, name, status)
                                 VALUES (?, ?, ?)";
-                                $default = 'default_profile_img.png';
+                                $default = 'default_profile_img.jpg';
                                 $false = 0;
 
                                 $stmt = mysqli_stmt_init($conn);

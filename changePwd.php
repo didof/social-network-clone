@@ -16,7 +16,7 @@ $msgOld = $msgNew = $msgNew2 = "";
 //     }
 // }
 ?>
-<h3>Change Password:</h3>
+<h1>Change Password:</h1>
 
 <form action="includes/changePwd.inc.php" method="post">
     <input type="password" name="oldPwd" placeholder="Old Password"><span class="error"> <?php echo $msgOld ?></span> <br>

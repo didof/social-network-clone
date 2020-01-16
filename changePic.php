@@ -13,6 +13,7 @@ include_once "includes/dbh.inc.php";
 </head>
 
 <body>
+    <h1>Set/unset profile picture</h1>
     <?php
     # is this user already associated with a profile photo? If yes, show it
     // the Id it's already stored in $_SESSION["userId"]
