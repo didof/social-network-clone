@@ -2,26 +2,27 @@
 include_once "dbh.inc.php";
 
 # Aggiungi goaway
-# vedi se c'è l'immagine, evenutalmente devi cancellarla
-# cancella dal database il post richesto
 
 $post = $_GET["idPost"];
+echo 'idPost => ' . $post . '<br>';
 
-$sql = "SELECT * FROM post WHERE id=?";
+$sql = "SELECT * FROM post WHERE post_id=?";
 $stmt = mysqli_stmt_init($conn);
 mysqli_stmt_prepare($stmt, $sql);
 mysqli_stmt_bind_param($stmt, "i", $post);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $image = mysqli_fetch_assoc($result);
+echo '$image => ';
+print_r($image);
+
 $dir = $image["post_dir"];
 $author = $image["post_author"];
 $fileName = $image["post_file_name"];
-echo $fileName;
 
 if ($fileName == "") {
     # Cancel from database
-    $sql = "DELETE FROM post WHERE id=?";
+    $sql = "DELETE FROM post WHERE post_id=?";
     $stmt = mysqli_stmt_init($conn);
     mysqli_stmt_prepare($stmt, $sql);
     mysqli_stmt_bind_param($stmt, "i", $post);
@@ -36,7 +37,7 @@ if ($fileName == "") {
         echo '>Error: file was not deleted.';
     } else {
         # Cancel from database too
-        $sql = "DELETE FROM post WHERE id=?";
+        $sql = "DELETE FROM post WHERE post_id=?";
         $stmt = mysqli_stmt_init($conn);
         mysqli_stmt_prepare($stmt, $sql);
         mysqli_stmt_bind_param($stmt, "i", $post);

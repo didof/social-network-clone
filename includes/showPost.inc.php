@@ -58,14 +58,20 @@ if (isset($_POST["search-submit-post"])) {
     if (mysqli_num_rows($query) > 0) {
         while ($row = mysqli_fetch_assoc($query)) {
             echo '<div class="post">
-        <div class="header">
-            <div><img src="uploads/' . $row["name"] . '" height="40px" width="40px"></div>
+            <div class="header">';
+            if ($row["post_dir"] == "anonymous") {
+                echo '<div><img src="uploads/anon_profile_img.png" height="40px" width="40px"></div>
+            <div>' . $row["post_title"] . '</div>
+            <div>Anonymous</div>';
+            } else {
+                echo '<div><img src="uploads/' . $row["name"] . '" height="40px" width="40px"></div>
             <div>' . $row["post_title"] . '</div>
             <div>' . $row["post_author"] . ' (' . $row["post_user_id"] . ')</div>';
+            }
             if ($userId == $row["post_user_id"]) {
                 echo '<div><button>Comment</button></div>
                     <div><button>Modify</button></div>
-            <div><a href="includes/deletePost.inc.php?idPost=' . $row["id"] . '"><button>Cancel</button></a></div>';
+            <div><a href="includes/deletePost.inc.php?idPost=' . $row["post_id"] . '"><button>Cancel</button></a></div>';
             } else {
                 echo '<div></div>
             <div></div>';
