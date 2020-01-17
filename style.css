@@ -44,6 +44,7 @@ button {
     "wantTo photos resultUser";
   background-color: #e2d3d3;
   padding: 10px;
+  margin: 3px 8px;
 }
 
 .empty {
@@ -77,10 +78,14 @@ button {
   grid-row: 1 / auto; */
   justify-content: start;
   align-items: flex-start;
+  background-color: #eeeeee;
+  border-radius: 50px;
+  border-bottom: 5px solid black;
+  margin: 3px 8px;
 }
 
 .resultUsers div:nth-child(odd) {
-  background-color: #bbbbbb;
+  background-color: #ffffff;
 }
 
 .canDo {
@@ -113,7 +118,7 @@ button {
   background-color: #fedce6;
 }
 
-.photos {
+.uploadPost {
   grid-area: photos;
   /* grid-column: 2 / 3;
   grid-row: 5 / 6; */
@@ -123,4 +128,11 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.table-post {
+  width: 100%;
+  border: collapse;
+  padding: 3px 8px;
+  margin: 5px;
 }

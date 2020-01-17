@@ -26,7 +26,7 @@ session_start();
         </ul>
     <?php } else if (!isset($_SESSION["userId"])) { ?>
         <form action="includes/login.inc.php" method="post">
-            <input type="test" name="mail" placeholder="e-mail">
+            <input type="test" name="mail" placeholder="e-mail or username">
             <input type="password" name="password" placeholder="password">
             <button type="submit" name="login-submit">Login</button>
             <input type="checkbox" name="remember" value=0>Remember me

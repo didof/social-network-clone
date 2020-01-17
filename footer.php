@@ -9,7 +9,6 @@
 </head>
 
 <body>
-    <h3>Postagma says:</h3>
     <?php require "displayError.php" ?>
 
 </body>

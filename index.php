@@ -9,8 +9,8 @@ include_once "includes/dbh.inc.php";
         # Logged in
     ?>
         <div class="grid">
-            <div class="empty">empty</div>
-            <div class="empty2">empty2</div>
+            <div class="empty"></div>
+            <div class="empty2">User in db:</div>
             <div class="searchBar">
                 <form action="index.php" method="post">
                     <input type="text" name="searchInput" placeholder="Look for an username/e-mail">
@@ -45,7 +45,7 @@ include_once "includes/dbh.inc.php";
                         }
                     }
                 }
-
+                echo $_SESSION["userName"];
                 ?>
                 <!-- <img src="uploads/default_profile_img.jpg" height="100px" width="100px"> -->
 
@@ -85,12 +85,52 @@ include_once "includes/dbh.inc.php";
                             <li>choose website theme</li>
                         </ul>
                     </li>
-
                 </ul>
             </div>
-            <div class="photos">
-                Show photos.
+            <div class="uploadPost">
+                <?php if (!isset($_GET["order"])) : ?>
+                    <form action="index.php?order=uploadPost" method="post">
+                        <table class="table-post">
+                            <tr>
+                                <td><input text="text" disabled></td>
+                                <td><button type="submit">Post</button></td>
+                            </tr>
+
+                        </table>
+                    </form>
+                <?php else : ?>
+                    <form action="includes/uploadPost.inc.php" method="post" enctype="multipart/form-data">
+                        <table class="table-post">
+                            <tr>
+                                <td><input text="text" name="post_title" placeholder="title"></td>
+                                <td><button type="submit" name="cancel-uploadPost">Cancel</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="post_content" placeholder="content"></td>
+                                <td><button type="submit" name="draft-uploadPost">Draft</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="file" name="post_file" value="add photo(s)"></td>
+                                <td><button type="submit" name="submit-uploadPost">Post</button></td>
+                            </tr>
+                            <tr>
+                                <td>Repository: </td>
+                                <td><select name="post_dir">
+                                        <option value="myself">my self/</option>
+                                        <option value="anonymous">anonymous/</option>
+                                        <option value="opinion">opinion</option>
+                                        <option value="ads">ads/</option>
+                                        <!-- is beein sold? -->
+                                        <option value="recipes">recipes</option>
+                                    </select></td>
+                            </tr>
+
+                            <!-- if there is photo, show it in gallery, with associated this post -->
+
+                    </form>
             </div>
+        <?php endif; ?>
+        </div>
         </div>
     <?php
     } else {
