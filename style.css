@@ -161,14 +161,14 @@ button:disabled {
 
 .post .header {
   display: grid;
-  grid-template-columns: 3fr 3fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 2fr 1fr 1fr 1fr;
   background-color: #46424b;
   font-size: 20px;
   font-family: Arial;
   color: white;
   padding: 3px 5px;
   border-radius: 5px;
-  height: 40px;
+  height: 50px;
 }
 
 .profile-pic {

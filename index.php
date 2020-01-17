@@ -14,7 +14,8 @@ include_once "includes/dbh.inc.php";
             <div class="searchBar">
                 <form action="index.php" method="post">
                     <input type="text" name="searchInput" placeholder="Look for an username/e-mail">
-                    <button type="submit" name="search-submit">Search</button>
+                    <button type="submit" name="search-submit">Search user</button>
+                    <button type="submit" name="search-submit-post">Search post</button>
                 </form>
             </div>
             <div class="profilePic">
