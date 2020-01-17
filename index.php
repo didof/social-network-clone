@@ -22,7 +22,7 @@ include_once "includes/dbh.inc.php";
                 $sql = "SELECT * FROM profileimg WHERE userId=?";
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
-                    echo '<img src="uploads/error_profile_img.png" height="100px" width="100px">';
+                    echo '<div class="profile-pic"><img src="uploads/error_profile_img.png" height="100px" width="100px"></div>';
                 } else {
                     mysqli_stmt_bind_param($stmt, "i", $_SESSION["userId"]);
                     mysqli_stmt_execute($stmt);
@@ -30,22 +30,22 @@ include_once "includes/dbh.inc.php";
                     $row = mysqli_fetch_assoc($result);
                     if (!($row > 0)) {
                         # there is not the row associated with this user
-                        echo '<img src="uploads/error_profile_img.png" height="100px" width="100px">';
+                        echo '<div class="profile-pic"><img src="uploads/error_profile_img.png" height="100px" width="100px"></div>';
                     } else {
                         # there istus the row associated with this user
                         if ($row["status"] == 0) {
                             # thus, the user didn't uploaded yet
-                            echo '<img src="uploads/default_profile_img.jpg" height="100px" width="100px">';
+                            echo '<div class="profile-pic"><img src="uploads/default_profile_img.jpg" height="100px" width="100px"></div>';
                         } else {
                             # this, the user already uploaded the pic
-                            echo "<img src='uploads/" . $row["name"] . "?" . mt_rand() . "' height='150px' width='200px'>";
+                            echo "<div class='profile-pic'><img src='uploads/" . $row["name"] . "?" . mt_rand() . "' height='150px' width='200px'></div>";
                             // some browser can remember the picture and this force the user to refresh the page
                             # FIX -> add mt_rand()
                             // <img src='uploads/profile_image_user_1.jpg?218728917'>
                         }
                     }
                 }
-                echo $_SESSION["userName"];
+                echo 'Username: ' . $_SESSION["userName"];
                 ?>
                 <!-- <img src="uploads/default_profile_img.jpg" height="100px" width="100px"> -->
 
@@ -60,12 +60,12 @@ include_once "includes/dbh.inc.php";
                     <li><a href="changePwd.php">Change password</a></li>
                     <li><a href="changePic.php">Set/unset profile picture</a></li>
                     <li><a href="deleteUser.php">Delete account</a></li>
+                    <li><a href="index.php?order=uploadPost">Upload picture</a></li>
                 </ul>
             </div>
             <div class="workingOn">
                 <h3>Working on:</h3>
                 <ul>
-                    <li><a href="uploadPic.php">Upload picture</a></li>
                     <li><a href="changeMail.php">Change e-mail</a></li>
                     <li><a href="changeUsername.php">Change username</a></li>
                 </ul>
@@ -118,29 +118,32 @@ include_once "includes/dbh.inc.php";
                                 <td><select name="post_dir">
                                         <option value="myself">my self/</option>
                                         <option value="anonymous">anonymous/</option>
-                                        <option value="opinion">opinion</option>
+                                        <option value="opinion">opinion/</option>
                                         <option value="ads">ads/</option>
                                         <!-- is beein sold? -->
-                                        <option value="recipes">recipes</option>
+                                        <option value="recipes">recipes/</option>
                                     </select></td>
                             </tr>
-
-                            <!-- if there is photo, show it in gallery, with associated this post -->
-
+                        </table>
                     </form>
+                <?php
+                endif;
+                ?>
             </div>
-        <?php endif; ?>
-        </div>
-        </div>
-    <?php
+            <div class="showPost">
+                <?php require "includes/showPost.inc.php" ?>
+            </div>
+            <!-- if there is photo, show it in gallery, with associated this post -->
+
+        <?php
     } else {
-    ?>
-        <!-- Not logged in -->
-        Welcome to my social network.
-        <a href="signup.php">Signup</a>
-    <?php
+        ?>
+            <!-- Not logged in -->
+            Welcome to my social network.
+            <a href="signup.php">Signup</a>
+        <?php
     }
-    ?>
+        ?>
 </main>
 
 <?php

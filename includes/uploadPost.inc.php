@@ -22,53 +22,78 @@ if (isset($_POST["cancel-uploadPost"])) {
     $fileType = $postFile["type"];
     $fileTmp = $postFile["tmp_name"];
 
-    # Overwrite the name of the file with the title of the post and add the extention
-    $fileExploded = explode('.', $fileName);
-    $fileExtention = strtolower(end($fileExploded));
-    $fileName = $postTitle . "_" . uniqid('', true) . "." . $fileExtention;
-    echo '$fileName => ' . $fileName . "<br>";
+    echo '$_FILES => ';
+    print_r($_FILES);
+    echo '<br>';
 
-    $sql = "INSERT INTO post (post_user_id, post_title, post_content, post_author, post_file_name, post_dir)
-        VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        echo '>Error: statement and request not associated.<br><br>';
-    } else if (!mysqli_stmt_bind_param($stmt, "isssss", $postId, $postTitle, $postContent, $postName, $fileName, $postDir)) {
-        echo '>Error: data not binded.<br><br>';
-    } else if (!mysqli_stmt_execute($stmt)) {
-        echo '>Error: query not executed.<br><br>';
+    if ($_FILES["post_file"]["size"] == 0) { // check if there is or not the image
+        echo '$_FILES is null';
+        $sql = "INSERT INTO post (post_user_id, post_title, post_content, post_author, post_dir)
+        VALUES (?, ?, ?, ?, ?)";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            echo '>Error: statement and request not associated.<br><br>';
+        } else if (!mysqli_stmt_bind_param($stmt, "issss", $postId, $postTitle, $postContent, $postName, $postDir)) {
+            echo '>Error: data not binded.<br><br>';
+        } else if (!mysqli_stmt_execute($stmt)) {
+            echo '>Error: query not executed.<br><br>';
+        } else {
+            echo '>Success: data inserted in db.<br><br>';
+            mysqli_stmt_close($stmt);
+            header("Location: ../index.php?success=uploadPost");
+            exit();
+        } // success inserting data in db (without picture)
     } else {
-        echo '>Success: data inserted in db.<br><br>';
+        echo '$_FILES is not null';
 
-        # Send in tipology folder, possibly make it first
-        $path = "../uploads/post/" . $postDir . "/";
-        echo $path;
-        echo '<br><br>';
+        # Overwrite the name of the file with the title of the post and add the extention
+        $fileExploded = explode('.', $fileName);
+        $fileExtention = strtolower(end($fileExploded));
+        $fileName = $postTitle . "_" . uniqid('', true) . "." . $fileExtention;
+        echo '<br>$fileName => ' . $fileName . "<br>";
 
-        if (!file_exists($path)) {
-            mkdir("../uploads/post/" . $postDir, 0777);
-            echo "The directory {$postDir} was successfully created.<br><br>";
+        $sql = "INSERT INTO post (post_user_id, post_title, post_content, post_author, post_file_name, post_dir)
+        VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            echo '>Error: statement and request not associated.<br><br>';
+        } else if (!mysqli_stmt_bind_param($stmt, "isssss", $postId, $postTitle, $postContent, $postName, $fileName, $postDir)) {
+            echo '>Error: data not binded.<br><br>';
+        } else if (!mysqli_stmt_execute($stmt)) {
+            echo '>Error: query not executed.<br><br>';
         } else {
-            echo "The directory {$postDir} exists.<br><br>";
-        }
+            echo '>Success: data inserted in db.<br><br>';
 
-        // Set a personal folder for this user
-        $userPath = $path . $postName . "/";
-        echo $userPath . '<br>';
+            # Send in tipology folder, possibly make it first
+            $path = "../uploads/post/" . $postDir . "/";
+            echo $path;
+            echo '<br><br>';
 
-        if (!file_exists($userPath)) {
-            mkdir($userPath, 0777);
-            echo "The directory {$userPath} was successfully created.<br><br>";
-        } else {
-            echo "The directory {$userPath} exists.<br><br>";
-        }
+            if (!file_exists($path)) {
+                mkdir("../uploads/post/" . $postDir, 0777);
+                echo "The directory {$postDir} was successfully created.<br><br>";
+            } else {
+                echo "The directory {$postDir} exists.<br><br>";
+            }
 
-        #Thus, insert into folder the pic
-        $fileDestination = $userPath . $fileName;
-        move_uploaded_file($fileTmp, $fileDestination);
+            // Set a personal folder for this user
+            $userPath = $path . $postName . "/";
+            echo $userPath . '<br>';
 
-        mysqli_stmt_close($stmt);
-        header("Location: ../index.php?success=uploadPost");
-        exit();
-    } // success inserting data in db
+            if (!file_exists($userPath)) {
+                mkdir($userPath, 0777);
+                echo "The directory {$userPath} was successfully created.<br><br>";
+            } else {
+                echo "The directory {$userPath} exists.<br><br>";
+            }
+
+            #Thus, insert into folder the pic
+            $fileDestination = $userPath . $fileName;
+            move_uploaded_file($fileTmp, $fileDestination);
+
+            mysqli_stmt_close($stmt);
+            header("Location: ../index.php?success=uploadPost");
+            exit();
+        } // success inserting data in db (with picture)
+    } // close if file exist or not
 } // close submit-upload
